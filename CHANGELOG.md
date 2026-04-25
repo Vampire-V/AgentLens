@@ -8,6 +8,20 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- **ui:** `AgentNode` — XYFlow custom node card with model color badges (opus/sonnet/haiku)
+- **ui:** `FlowCanvas` — XYFlow canvas with `Background`, `Controls`, `MiniMap`; `nodeTypes` at
+  module level; syncs ELK-positioned nodes via `useNodesState` + `useEffect`
+- **ui:** `YamlEditor` — controlled textarea with inline Zod error banner
+- **ui:** `SplitPane` — client shell wiring `useQueryState` (nuqs) → `useYamlParser` →
+  `workflowToFlowGraph` → `useElkLayout` → `FlowCanvas`; YAML state shared via URL
+- **infra:** `NuqsAdapter` added to `app/layout.tsx` (required for Next.js App Router)
+- **infra:** `app/page.tsx` replaced with AgentLens split-pane layout
+
+---
+
+## v0.2.0 (2026-04-26)
+
+### Added
 - **layout:** `elkLayout` pure async function — wraps ELKjs `layered` algorithm,
   returns `FlowNode[]` with `{x,y}` positions replacing `{0,0}` placeholders
 - **layout:** `useElkLayout` hook — topology-aware (re-layouts only when node IDs
