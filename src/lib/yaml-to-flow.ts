@@ -1,10 +1,12 @@
 import type { Node, Edge } from '@xyflow/react';
-import type { Workflow } from './yaml-schema';
+import type { Workflow, AgentRole } from './yaml-schema';
 
 export type AgentNodeData = {
   name: string;
   description?: string;
   model?: string;
+  role?: AgentRole;
+  prompt?: string;
   tools?: string[];
 };
 
@@ -20,6 +22,8 @@ export function workflowToFlowGraph(workflow: Workflow): { nodes: FlowNode[]; ed
       name: agent.name,
       description: agent.description,
       model: agent.model,
+      role: agent.role,
+      prompt: agent.prompt,
       tools: agent.tools,
     },
   }));
