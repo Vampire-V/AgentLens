@@ -8,6 +8,7 @@ import {
   MiniMap,
   useNodesState,
   useEdgesState,
+  useReactFlow,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { AgentNode } from './agent-node';
@@ -15,6 +16,18 @@ import type { FlowNode, FlowEdge } from '@/lib/yaml-to-flow';
 
 // must be at module level — object identity must be stable across renders
 const nodeTypes = { agent: AgentNode };
+
+// rendered inside <ReactFlow> context so useReactFlow() is available
+function FitViewOnChange({ elkNodes }: { elkNodes: FlowNode[] }) {
+  const { fitView } = useReactFlow();
+  useEffect(() => {
+    if (elkNodes.length === 0) return;
+    // 150ms gives React time to flush setNodes + XYFlow to measure node dimensions via ResizeObserver
+    const id = setTimeout(() => fitView({ padding: 0.2 }), 150);
+    return () => clearTimeout(id);
+  }, [elkNodes, fitView]);
+  return null;
+}
 
 interface FlowCanvasProps {
   nodes: FlowNode[];
@@ -47,12 +60,11 @@ function FlowCanvasComponent({ nodes: elkNodes, edges: elkEdges, isLayouting }: 
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
-        fitView
-        fitViewOptions={{ padding: 0.2 }}
       >
         <Background />
         <Controls />
         <MiniMap />
+        <FitViewOnChange elkNodes={elkNodes} />
       </ReactFlow>
     </div>
   );

@@ -7,15 +7,25 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+---
+
+## v0.3.0 (2026-04-26)
+
 ### Added
 - **ui:** `AgentNode` — XYFlow custom node card with model color badges (opus/sonnet/haiku)
 - **ui:** `FlowCanvas` — XYFlow canvas with `Background`, `Controls`, `MiniMap`; `nodeTypes` at
-  module level; syncs ELK-positioned nodes via `useNodesState` + `useEffect`
+  module level; syncs ELK-positioned nodes via `useNodesState` + `useEffect`; `FitViewOnChange`
+  inner component refits viewport whenever ELK topology changes
 - **ui:** `YamlEditor` — controlled textarea with inline Zod error banner
 - **ui:** `SplitPane` — client shell wiring `useQueryState` (nuqs) → `useYamlParser` →
   `workflowToFlowGraph` → `useElkLayout` → `FlowCanvas`; YAML state shared via URL
 - **infra:** `NuqsAdapter` added to `app/layout.tsx` (required for Next.js App Router)
 - **infra:** `app/page.tsx` replaced with AgentLens split-pane layout
+
+### Changed
+- **ui:** `FlowCanvas` wrapped with `memo()` to prevent re-render storms on every keystroke
+- **ui:** `onChange` in `SplitPane` wrapped with `useCallback` for stable identity
+- **layout:** `NODE_HEIGHT` increased 60 → 100 to avoid node overlap when description is present
 
 ---
 

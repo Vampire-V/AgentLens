@@ -1,6 +1,6 @@
 'use client'; // stateful shell — useQueryState + all hooks require client
 
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useQueryState } from 'nuqs';
 import { useYamlParser } from '@/hooks/use-yaml-parser';
 import { useElkLayout } from '@/hooks/use-elk-layout';
@@ -42,10 +42,12 @@ export function SplitPane() {
 
   const { nodes, isLayouting } = useElkLayout(rawNodes, edges);
 
+  const handleYamlChange = useCallback((v: string) => void setYaml(v), [setYaml]);
+
   return (
     <div className="flex h-full w-full overflow-hidden">
       <div className="h-full w-1/2 border-r border-zinc-200">
-        <YamlEditor value={yaml} onChange={(v) => void setYaml(v)} error={error} />
+        <YamlEditor value={yaml} onChange={handleYamlChange} error={error} />
       </div>
       <div className="h-full w-1/2">
         <FlowCanvas nodes={nodes} edges={edges} isLayouting={isLayouting} />
