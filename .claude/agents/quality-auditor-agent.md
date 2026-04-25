@@ -82,7 +82,24 @@ npm audit --audit-level=high 2>/dev/null \
   || true
 ```
 
-### Audit 5 — Scope & Diff Sanity
+### Audit 5 — Changelog
+
+```bash
+grep -c "\[Unreleased\]" CHANGELOG.md   # must exist
+git diff HEAD -- CHANGELOG.md           # must have changes (non-empty)
+```
+
+```
+□ CHANGELOG.md has an [Unreleased] section
+□ CHANGELOG.md was modified in this branch (not empty diff)
+□ Entry describes what changed (Added/Changed/Fixed/Removed)
+```
+
+FAIL if CHANGELOG.md was not touched at all in this branch.
+
+---
+
+### Audit 6 — Scope & Diff Sanity
 
 ```bash
 DEFAULT_BRANCH=$(.claude/scripts/read-fm.sh git default_branch)
@@ -115,6 +132,9 @@ git diff "${DEFAULT_BRANCH}" --stat
 ### Security
 ✅ No findings | ⚠️  N warnings | ❌ N blockers
 
+### Changelog
+✅ Updated | ❌ Not touched
+
 ### Scope
 ✅ Diff focused | ⚠️  Notes: ...
 
@@ -137,20 +157,20 @@ This writes `.claude/review-passed.json` (passed_at, last_reviewed_sha) — `pr-
 
 ## Extension
 
-Add `Audit 6+` sections for stack-specific checks per project:
+Add `Audit 7+` sections for stack-specific checks per project:
 - AOT warnings (`/warnaserror`) for .NET Native AOT projects
 - Bundle size analysis for Next.js / Vite frontends
 - RLS policy presence for Supabase migrations
 - Type coverage thresholds for TypeScript
 - Custom domain rules
 
-Keep Audits 1–5 above intact for portability across projects.
+Keep Audits 1–6 above intact for portability across projects.
 
 ---
 
 ## Hard Rules
 
-- Never PASS if any of Audits 1–5 fail
+- Never PASS if any of Audits 1–6 fail
 - Never skip `create-review-stamp.sh` on PASS — `pr-agent` requires the stamp
 - Always re-audit after fixes; the stamp must reflect current HEAD
 - If `commands.lint` or `commands.test` is `<TBD>`, refuse to proceed

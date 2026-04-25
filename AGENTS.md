@@ -38,14 +38,17 @@ Activation: copy the slot file into `.claude/agents/`, fill the `<FILL: ...>` ma
    git diff <default_branch> --stat
    ```
 2. Run lint + tests (`commands.lint`, `commands.test`). All pass.
-3. **User explicit approval** ("ready to PR" or similar).
-4. `quality-auditor-agent` PASS → writes `.claude/review-passed.json`.
-5. `pr-agent` verifies stamp matches HEAD SHA → creates PR.
+3. **Update `CHANGELOG.md`** — add entry under `[Unreleased]` describing what changed.
+   Use `### Added` / `### Changed` / `### Fixed` / `### Removed` as appropriate.
+4. **User explicit approval** ("ready to PR" or similar).
+5. `quality-auditor-agent` PASS → writes `.claude/review-passed.json`.
+6. `pr-agent` verifies stamp matches HEAD SHA → creates PR.
 
 ### Lite Gate (Path D)
 1. Show diff.
-2. **User explicit approval**.
-3. `pr-agent` creates PR (no auditor stamp required).
+2. **Update `CHANGELOG.md`** — add entry under `[Unreleased]`.
+3. **User explicit approval**.
+4. `pr-agent` creates PR (no auditor stamp required).
 
 ---
 
