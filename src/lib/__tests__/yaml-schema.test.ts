@@ -51,4 +51,35 @@ describe('WorkflowSchema', () => {
     expect(result.routes).toEqual([]);
     expect(result.agents[0].tools).toEqual([]);
   });
+
+  it('agent_with_role_manager__parse__succeeds_with_role', () => {
+    const input = {
+      agents: [{ id: 'agent-a', name: 'Agent A', role: 'manager' }],
+    };
+    const result = WorkflowSchema.parse(input);
+    expect(result.agents[0].role).toBe('manager');
+  });
+
+  it('agent_with_role_invalid__parse__fails_validation', () => {
+    const input = {
+      agents: [{ id: 'agent-a', name: 'Agent A', role: 'invalid-role' }],
+    };
+    expect(() => WorkflowSchema.parse(input)).toThrow();
+  });
+
+  it('agent_with_prompt__parse__includes_prompt_in_output', () => {
+    const input = {
+      agents: [{ id: 'agent-a', name: 'Agent A', prompt: 'You are a helpful assistant.' }],
+    };
+    const result = WorkflowSchema.parse(input);
+    expect(result.agents[0].prompt).toBe('You are a helpful assistant.');
+  });
+
+  it('agent_with_arbitrary_model_string__parse__succeeds', () => {
+    const input = {
+      agents: [{ id: 'agent-a', name: 'Agent A', model: 'claude-opus-4-7' }],
+    };
+    const result = WorkflowSchema.parse(input);
+    expect(result.agents[0].model).toBe('claude-opus-4-7');
+  });
 });

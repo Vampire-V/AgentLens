@@ -1,10 +1,14 @@
 import { z } from 'zod';
 
+const AgentRoleEnum = z.enum(['manager', 'worker', 'critic', 'tool', 'custom']);
+
 const AgentSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   description: z.string().optional(),
-  model: z.enum(['opus', 'sonnet', 'haiku']).optional(),
+  model: z.string().optional(),
+  role: AgentRoleEnum.default('custom'),
+  prompt: z.string().optional(),
   tools: z.array(z.string()).optional().default([]),
 });
 
@@ -34,3 +38,4 @@ export const WorkflowSchema = z
 export type Workflow = z.infer<typeof WorkflowSchema>;
 export type Agent = z.infer<typeof AgentSchema>;
 export type Route = z.infer<typeof RouteSchema>;
+export type AgentRole = z.infer<typeof AgentRoleEnum>;
