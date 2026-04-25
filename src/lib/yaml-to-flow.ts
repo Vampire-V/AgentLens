@@ -28,6 +28,7 @@ export function workflowToFlowGraph(workflow: Workflow): { nodes: FlowNode[]; ed
     id: route.id,
     source: route.source,
     target: route.target,
+    label: route.label,
     data: { label: route.label, condition: route.condition },
   }));
 

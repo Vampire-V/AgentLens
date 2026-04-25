@@ -86,7 +86,8 @@ npm audit --audit-level=high 2>/dev/null \
 
 ```bash
 grep -c "\[Unreleased\]" CHANGELOG.md   # must exist
-git diff HEAD -- CHANGELOG.md           # must have changes (non-empty)
+DEFAULT_BRANCH=$(.claude/scripts/read-fm.sh git default_branch)
+git diff "${DEFAULT_BRANCH}..HEAD" -- CHANGELOG.md   # must have changes (non-empty)
 ```
 
 ```

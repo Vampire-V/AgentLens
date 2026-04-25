@@ -48,4 +48,11 @@ describe('workflowToFlowGraph', () => {
       expect(node.position).toEqual({ x: 0, y: 0 });
     });
   });
+
+  it('edge_with_label__convert__has_top_level_label', () => {
+    const { edges } = workflowToFlowGraph(threeAgentWorkflow);
+    const r1 = edges.find((e) => e.id === 'r1');
+    expect(r1?.label).toBe('Feature request');
+    expect(r1?.data?.label).toBe('Feature request');
+  });
 });
