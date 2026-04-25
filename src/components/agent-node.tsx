@@ -6,11 +6,12 @@ import type { NodeProps } from '@xyflow/react';
 import type { FlowNode } from '@/lib/yaml-to-flow';
 import type { AgentRole } from '@/lib/yaml-schema';
 
-const MODEL_COLORS: Record<string, string> = {
-  opus: 'bg-purple-100 text-purple-700',
-  sonnet: 'bg-blue-100 text-blue-700',
-  haiku: 'bg-green-100 text-green-700',
-};
+function getModelColorClass(model: string): string {
+  if (model.includes('opus')) return 'bg-purple-100 text-purple-700';
+  if (model.includes('sonnet')) return 'bg-blue-100 text-blue-700';
+  if (model.includes('haiku')) return 'bg-green-100 text-green-700';
+  return 'bg-zinc-100 text-zinc-600';
+}
 
 const ROLE_BORDER_COLORS: Record<AgentRole, string> = {
   manager: 'border-purple-400',
@@ -21,7 +22,7 @@ const ROLE_BORDER_COLORS: Record<AgentRole, string> = {
 };
 
 function AgentNodeComponent({ data, selected }: NodeProps<FlowNode>) {
-  const modelColor = data.model ? (MODEL_COLORS[data.model] ?? 'bg-zinc-100 text-zinc-600') : null;
+  const modelColor = data.model ? getModelColorClass(data.model) : null;
   const borderColor = ROLE_BORDER_COLORS[data.role ?? 'custom'];
   const selectedRing = selected ? 'ring-2 ring-blue-500 ring-offset-1' : '';
 

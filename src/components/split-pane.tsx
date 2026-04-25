@@ -51,6 +51,8 @@ export function SplitPane() {
     setSelectedAgentId(nodeId);
   }, []);
 
+  const handleInspectorClose = useCallback(() => setSelectedAgentId(null), []);
+
   const selectedAgent = useMemo(
     () => workflow?.agents.find(a => a.id === selectedAgentId) ?? null,
     [workflow, selectedAgentId]
@@ -64,7 +66,7 @@ export function SplitPane() {
       <div className="h-full w-1/2">
         <FlowCanvas nodes={nodes} edges={edges} isLayouting={isLayouting} onNodeClick={handleNodeClick} />
       </div>
-      <AgentInspector agent={selectedAgent} onClose={() => setSelectedAgentId(null)} />
+      <AgentInspector agent={selectedAgent} onClose={handleInspectorClose} />
     </div>
   );
 }
