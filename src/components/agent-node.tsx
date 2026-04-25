@@ -4,6 +4,7 @@ import { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import type { NodeProps } from '@xyflow/react';
 import type { FlowNode } from '@/lib/yaml-to-flow';
+import type { AgentRole } from '@/lib/yaml-schema';
 
 const MODEL_COLORS: Record<string, string> = {
   opus: 'bg-purple-100 text-purple-700',
@@ -11,13 +12,23 @@ const MODEL_COLORS: Record<string, string> = {
   haiku: 'bg-green-100 text-green-700',
 };
 
-function AgentNodeComponent({ data }: NodeProps<FlowNode>) {
+const ROLE_BORDER_COLORS: Record<AgentRole, string> = {
+  manager: 'border-purple-400',
+  worker: 'border-blue-400',
+  critic: 'border-orange-400',
+  tool: 'border-green-400',
+  custom: 'border-zinc-200',
+};
+
+function AgentNodeComponent({ data, selected }: NodeProps<FlowNode>) {
   const modelColor = data.model ? (MODEL_COLORS[data.model] ?? 'bg-zinc-100 text-zinc-600') : null;
+  const borderColor = ROLE_BORDER_COLORS[data.role ?? 'custom'];
+  const selectedRing = selected ? 'ring-2 ring-blue-500 ring-offset-1' : '';
 
   return (
     <>
       <Handle type="target" position={Position.Top} />
-      <div className="min-w-[172px] rounded-lg border border-zinc-200 bg-white px-4 py-3 shadow-sm">
+      <div className={`min-w-[172px] rounded-lg border bg-white px-4 py-3 shadow-sm ${borderColor} ${selectedRing}`}>
         <div className="flex items-center justify-between gap-2">
           <span className="text-sm font-semibold text-zinc-900">{data.name}</span>
           {modelColor && (
