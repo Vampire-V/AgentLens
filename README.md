@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AgentLens
+
+[![CI](https://github.com/Vampire-V/AgentLens/actions/workflows/ci.yml/badge.svg)](https://github.com/Vampire-V/AgentLens/actions/workflows/ci.yml)
+
+Visual YAML editor for AI agent orchestration workflows. Edit YAML on the left, see the agent graph auto-layout and render on the right in real time.
+
+## Features
+
+- **Split-pane editor** — YAML on the left, interactive graph on the right
+- **Real-time parsing** — 150ms debounce, Zod schema validation with inline error display
+- **Auto-layout** — ELKjs `layered` algorithm positions agents automatically (no manual drag needed)
+- **URL sharing** — workflow state lives in the URL query string; paste the URL to share
+- **Model badges** — color-coded by model tier (opus / sonnet / haiku)
+
+## YAML Format
+
+```yaml
+version: "1.0.0"
+name: "My Workflow"
+agents:
+  - id: orchestrator
+    name: "Orchestrator"
+    model: opus          # opus | sonnet | haiku
+    tools: [Read, Bash]  # optional
+    description: "..."   # optional
+routes:
+  - id: r1
+    source: orchestrator
+    target: researcher
+    label: "Research task"
+    condition: "..."     # optional
+```
+
+## Tech Stack
+
+| Layer | Library |
+|---|---|
+| Framework | Next.js 16 (App Router + Turbopack) |
+| Graph renderer | XYFlow 12 |
+| Layout engine | ELKjs 0.9.3 |
+| Styling | Tailwind CSS v4 |
+| URL state | nuqs |
+| Schema validation | Zod + js-yaml |
+| Testing | Vitest + React Testing Library |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev          # dev server (Turbopack)
+npm run build        # production build
+npm run type-check   # TypeScript
+npm run lint         # ESLint + type-check
+npm run test         # Vitest (run once)
+npm run coverage     # Vitest with coverage
+```
