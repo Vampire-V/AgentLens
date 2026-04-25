@@ -2,7 +2,7 @@ import ELK from 'elkjs/lib/elk.bundled.js';
 import type { FlowNode, FlowEdge } from './yaml-to-flow';
 
 const NODE_WIDTH = 172;
-const NODE_HEIGHT = 60;
+const NODE_HEIGHT = 100;
 
 const elk = new ELK();
 

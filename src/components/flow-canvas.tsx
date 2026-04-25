@@ -1,6 +1,6 @@
 'use client'; // XYFlow requires client-side rendering
 
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import {
   ReactFlow,
   Background,
@@ -22,7 +22,7 @@ interface FlowCanvasProps {
   isLayouting: boolean;
 }
 
-export function FlowCanvas({ nodes: elkNodes, edges: elkEdges, isLayouting }: FlowCanvasProps) {
+function FlowCanvasComponent({ nodes: elkNodes, edges: elkEdges, isLayouting }: FlowCanvasProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<FlowNode>(elkNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState<FlowEdge>(elkEdges);
 
@@ -57,3 +57,5 @@ export function FlowCanvas({ nodes: elkNodes, edges: elkEdges, isLayouting }: Fl
     </div>
   );
 }
+
+export const FlowCanvas = memo(FlowCanvasComponent);
