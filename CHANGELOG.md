@@ -7,6 +7,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- **layout:** `elkLayout` pure async function — wraps ELKjs `layered` algorithm,
+  returns `FlowNode[]` with `{x,y}` positions replacing `{0,0}` placeholders
+- **layout:** `useElkLayout` hook — topology-aware (re-layouts only when node IDs
+  or edge connections change, not on every re-render); exposes `{ nodes, isLayouting }`
+
 ---
 
 ## v0.1.1 (2026-04-26)
