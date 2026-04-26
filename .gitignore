@@ -48,3 +48,9 @@ next-env.d.ts
 # Playwright
 test-results/
 playwright-report/
+
+# Playwright MCP runtime artifacts
+.playwright-mcp/
+
+# Superpowers plugin runtime data
+.superpowers/
