@@ -16,8 +16,22 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? 'https://agent-lens-murex.vercel.app'
   ),
-  title: "AgentLens",
-  description: "Visual YAML editor for AI agent orchestration workflows",
+  title: {
+    default: 'AgentLens — AI Agent Orchestration Visualizer',
+    template: '%s | AgentLens',
+  },
+  description:
+    'Free online tool to visualize AI agent workflows as interactive graphs. Supports CrewAI, LangGraph, AutoGen YAML. Real-time parsing + auto-layout.',
+  keywords: [
+    'AI agent orchestration',
+    'YAML visualizer',
+    'CrewAI visualizer',
+    'LangGraph diagram',
+    'agentic workflow',
+    'AI agent diagram',
+    'multi-agent workflow tool',
+    'AI agent orchestration visualizer',
+  ],
 };
 
 export default function RootLayout({
