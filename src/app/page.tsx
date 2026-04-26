@@ -233,7 +233,7 @@ routes:
             What is AgentLens?
           </h2>
 
-          <div className="prose prose-neutral dark:prose-invert max-w-none space-y-5 text-muted-foreground">
+          <div className="max-w-none space-y-5 text-muted-foreground">
             <p>
               AgentLens is a free, browser-based tool that transforms a YAML
               definition of an AI agent orchestration into an interactive, auto-laid-out
