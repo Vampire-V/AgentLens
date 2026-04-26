@@ -19,7 +19,6 @@ export function GET(request: Request) {
           justifyContent: 'center',
           padding: '60px 80px',
           background: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%)',
-          fontFamily: 'monospace',
         }}
       >
         <div
@@ -83,7 +82,6 @@ export function GET(request: Request) {
           justifyContent: 'center',
           padding: '60px 80px',
           background: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%)',
-          fontFamily: 'monospace',
         }}
       >
         <div
