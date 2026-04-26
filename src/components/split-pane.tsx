@@ -10,26 +10,77 @@ import { YamlEditor } from './yaml-editor';
 import { AgentInspector } from './agent-inspector';
 
 const DEFAULT_YAML = `version: "1.0.0"
-name: "My Workflow"
+name: "AI Research Pipeline"
 agents:
-  - id: orchestrator
-    name: "Orchestrator"
-    model: opus
-  - id: researcher
-    name: "Researcher"
-    model: sonnet
+  - id: coordinator
+    name: "Coordinator"
+    role: manager
+    model: claude-opus-4-7
+    prompt: |
+      Orchestrate the research pipeline. Break down the user's question,
+      dispatch sub-tasks to specialists, then synthesize findings into a report.
+
+  - id: web_researcher
+    name: "Web Researcher"
+    role: worker
+    model: claude-sonnet-4-6
+    tools: [web_search, browse_url, extract_content]
+    prompt: "Search the web and extract relevant information on assigned topics."
+
+  - id: data_analyst
+    name: "Data Analyst"
+    role: worker
+    model: claude-sonnet-4-6
+    tools: [python_repl, csv_reader, chart_generator]
+
+  - id: fact_checker
+    name: "Fact Checker"
+    role: critic
+    model: claude-sonnet-4-6
+    tools: [web_search]
+    prompt: "Verify claims and flag inaccuracies before the report is written."
+
   - id: writer
-    name: "Writer"
-    model: haiku
+    name: "Report Writer"
+    role: worker
+    model: claude-sonnet-4-6
+    prompt: "Synthesize verified findings into a clear, structured report."
+
+  - id: memory
+    name: "Memory Store"
+    role: tool
+    model: claude-haiku-4-5
+    tools: [vector_search, upsert_memory]
+
 routes:
   - id: r1
-    source: orchestrator
-    target: researcher
-    label: "Research task"
+    source: coordinator
+    target: web_researcher
+    label: "research brief"
   - id: r2
-    source: researcher
+    source: coordinator
+    target: data_analyst
+    label: "data task"
+  - id: r3
+    source: web_researcher
+    target: fact_checker
+    label: "raw findings"
+  - id: r4
+    source: data_analyst
+    target: fact_checker
+    label: "analysis"
+  - id: r5
+    source: fact_checker
     target: writer
-    label: "Write content"
+    label: "verified data"
+  - id: r6
+    source: writer
+    target: coordinator
+    label: "draft report"
+  - id: r7
+    source: coordinator
+    target: memory
+    label: "store context"
 `;
 
 export function SplitPane() {
