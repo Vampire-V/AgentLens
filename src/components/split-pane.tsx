@@ -96,6 +96,7 @@ routes:
 export function SplitPane() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- canonical next-themes SSR hydration pattern
   useEffect(() => setMounted(true), []);
   const colorMode = mounted ? ((resolvedTheme as 'light' | 'dark') ?? 'light') : 'light';
 
