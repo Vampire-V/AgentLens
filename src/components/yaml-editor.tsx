@@ -23,6 +23,47 @@ export function YamlEditor({ value, onChange, error }: YamlEditorProps) {
     }
   }, []);
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      const el = e.currentTarget;
+      const { selectionStart: ss, selectionEnd: se, value: v } = el;
+
+      const insert = (text: string, cursorOffset: number) => {
+        e.preventDefault();
+        const next = v.slice(0, ss) + text + v.slice(se);
+        onChange(next);
+        requestAnimationFrame(() => {
+          el.selectionStart = el.selectionEnd = ss + cursorOffset;
+        });
+      };
+
+      if (e.key === 'Tab') {
+        insert('  ', 2);
+        return;
+      }
+
+      if (e.key === 'Enter') {
+        const lineStart = v.lastIndexOf('\n', ss - 1) + 1;
+        const indent = v.slice(lineStart, ss).match(/^(\s*)/)?.[1] ?? '';
+        insert('\n' + indent, 1 + indent.length);
+        return;
+      }
+
+      // auto-close pairs — เฉพาะเมื่อไม่มี selection
+      if (ss === se) {
+        if (e.key === '[') { insert('[]', 1); return; }
+        if (e.key === '{') { insert('{}', 1); return; }
+        if (e.key === '"') {
+          // ถ้าอักขระถัดไปเป็น " อยู่แล้ว ให้ข้ามไปแทนการเพิ่มใหม่
+          if (v[ss] === '"') { e.preventDefault(); requestAnimationFrame(() => { el.selectionStart = el.selectionEnd = ss + 1; }); return; }
+          insert('""', 1);
+          return;
+        }
+      }
+    },
+    [onChange]
+  );
+
   // auto-scroll ไป error line เมื่อ error เปลี่ยน
   useEffect(() => {
     if (!errorLine || !textareaRef.current) return;
@@ -71,6 +112,7 @@ export function YamlEditor({ value, onChange, error }: YamlEditorProps) {
           style={{ lineHeight: '1.25rem' }}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          onKeyDown={handleKeyDown}
           onScroll={syncScroll}
           spellCheck={false}
           autoCorrect="off"
