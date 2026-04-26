@@ -39,3 +39,9 @@ export type Workflow = z.infer<typeof WorkflowSchema>;
 export type Agent = z.infer<typeof AgentSchema>;
 export type Route = z.infer<typeof RouteSchema>;
 export type AgentRole = z.infer<typeof AgentRoleEnum>;
+
+export interface ParseError {
+  message: string;
+  line?: number;   // 1-based
+  column?: number; // 1-based
+}

@@ -52,6 +52,16 @@ describe('useYamlParser', () => {
     });
     expect(result.current.workflow).toBeNull();
     expect(result.current.error).not.toBeNull();
+    expect(result.current.error?.message).toBeTruthy();
+  });
+
+  it('invalid_yaml_syntax__parse__extracts_line_number_from_mark', async () => {
+    const { result } = renderHook(() => useYamlParser(invalidYamlSyntax));
+    await act(async () => {
+      vi.advanceTimersByTime(150);
+    });
+    // js-yaml ควรระบุ line ได้สำหรับ syntax error
+    expect(result.current.error?.line).toBeGreaterThan(0);
   });
 
   it('empty_string__parse__returns_null_workflow_and_null_error', async () => {
