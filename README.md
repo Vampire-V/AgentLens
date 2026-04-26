@@ -1,7 +1,7 @@
 # AgentLens
 
 [![CI](https://github.com/Vampire-V/AgentLens/actions/workflows/ci.yml/badge.svg)](https://github.com/Vampire-V/AgentLens/actions/workflows/ci.yml)
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://agent-lens.vercel.app)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://agent-lens-murex.vercel.app)
 
 Visual YAML editor for AI agent orchestration workflows. Edit YAML on the left, see the agent graph auto-layout and render on the right in real time.
 
