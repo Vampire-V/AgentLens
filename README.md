@@ -1,6 +1,7 @@
 # AgentLens
 
 [![CI](https://github.com/Vampire-V/AgentLens/actions/workflows/ci.yml/badge.svg)](https://github.com/Vampire-V/AgentLens/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://agent-lens.vercel.app)
 
 Visual YAML editor for AI agent orchestration workflows. Edit YAML on the left, see the agent graph auto-layout and render on the right in real time.
 
@@ -11,6 +12,9 @@ Visual YAML editor for AI agent orchestration workflows. Edit YAML on the left, 
 - **Auto-layout** — ELKjs `layered` algorithm positions agents automatically (no manual drag needed)
 - **URL sharing** — workflow state lives in the URL query string; paste the URL to share
 - **Model badges** — color-coded by model tier (opus / sonnet / haiku)
+- **Dark mode** — follows system preference, toggle manually with the ☀/🌙 button
+- **Templates** — load pre-built workflows from the toolbar dropdown
+- **Export PNG** — download the graph as a high-resolution PNG
 
 ## YAML Format
 
