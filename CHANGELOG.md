@@ -5,6 +5,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [0.8.0](https://github.com/Vampire-V/AgentLens/compare/agentlens-v0.7.0...agentlens-v0.8.0) (2026-04-26)
+
+
+### Features
+
+* v0.7.0 — URL compression, error highlighting, editor assist ([#10](https://github.com/Vampire-V/AgentLens/issues/10)) ([a2ce415](https://github.com/Vampire-V/AgentLens/commit/a2ce41516d1525797104f60a4f4eca3b618be03c))
+
+
+### Bug Fixes
+
+* **ci:** ใช้ PAT แทน GITHUB_TOKEN ใน release-please เพื่อให้ CI trigger บน Release PR ได้ ([#8](https://github.com/Vampire-V/AgentLens/issues/8)) ([35ac312](https://github.com/Vampire-V/AgentLens/commit/35ac312050d1abf9dc16e882d2362fde4657a1f5))
+
 ## [0.7.0](https://github.com/Vampire-V/AgentLens/compare/agentlens-v0.6.1...agentlens-v0.7.0) (2026-04-26)
 
 
