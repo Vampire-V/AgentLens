@@ -11,7 +11,7 @@ export type AgentNodeData = {
 };
 
 export type FlowNode = Node<AgentNodeData, 'agent'>;
-export type FlowEdge = Edge<{ label: string; condition?: string; sourceRole?: string }>;
+export type FlowEdge = Edge<{ label: string; condition?: string; sourceRole?: AgentRole }>;
 
 export function workflowToFlowGraph(workflow: Workflow): { nodes: FlowNode[]; edges: FlowEdge[] } {
   const nodes: FlowNode[] = workflow.agents.map((agent) => ({
