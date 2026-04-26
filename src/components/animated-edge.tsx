@@ -46,16 +46,16 @@ function AnimatedEdgeComponent({
 
   return (
     <>
+      <defs>
+        <filter id={filterId}>
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
       <g>
-        <defs>
-          <filter id={filterId}>
-            <feGaussianBlur stdDeviation="2" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
         <path
           id={pathId}
           d={edgePath}
@@ -64,8 +64,8 @@ function AnimatedEdgeComponent({
           fill="none"
           markerEnd={markerEnd}
         />
-        {DOT_DELAYS.map((delay, i) => (
-          <circle key={i} r={4} fill={color} filter={`url(#${filterId})`}>
+        {DOT_DELAYS.map((delay) => (
+          <circle key={delay} r={4} fill={color} filter={`url(#${filterId})`}>
             <animateMotion dur="1.5s" begin={`${delay}s`} repeatCount="indefinite">
               <mpath href={`#${pathId}`} />
             </animateMotion>
