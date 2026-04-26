@@ -120,8 +120,8 @@ export function SplitPane() {
     <div className="flex h-full w-full flex-col overflow-hidden">
       <div className="flex shrink-0 items-center gap-2 border-b border-border bg-background px-3 py-1.5">
         <TemplatePicker onSelect={handleYamlChange} />
-        <DarkModeToggle />
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-1">
+          <DarkModeToggle />
           <ExportPngButton containerRef={canvasRef} />
         </div>
       </div>
