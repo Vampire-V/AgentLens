@@ -1,6 +1,6 @@
 'use client'; // interactive select — requires client runtime
 
-import { TEMPLATES } from '@/lib/templates'
+import { TEMPLATES, TEMPLATE_CATEGORIES } from '@/lib/templates'
 
 interface TemplatePickerProps {
   onSelect: (yaml: string) => void
@@ -20,11 +20,19 @@ export function TemplatePicker({ onSelect }: TemplatePickerProps) {
       <option value="" disabled>
         Load template…
       </option>
-      {TEMPLATES.map((t) => (
-        <option key={t.id} value={t.id}>
-          {t.name}
-        </option>
-      ))}
+      {TEMPLATE_CATEGORIES.map((cat) => {
+        const items = TEMPLATES.filter((t) => t.category === cat.id)
+        if (items.length === 0) return null
+        return (
+          <optgroup key={cat.id} label={cat.label}>
+            {items.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.name}
+              </option>
+            ))}
+          </optgroup>
+        )
+      })}
     </select>
   )
 }

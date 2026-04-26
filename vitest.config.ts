@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
-    exclude: ['e2e/**', 'node_modules/**'],
+    exclude: ['e2e/**', 'node_modules/**', '.worktrees/**'],
     coverage: {
       provider: 'v8',
       include: ['src/lib/**', 'src/hooks/**', 'src/components/**'],
@@ -19,6 +19,10 @@ export default defineConfig({
         'src/app/**',
       ],
       reporter: ['text', 'html'],
+      thresholds: {
+        'src/lib/**': { statements: 70, functions: 70, lines: 70 },
+        'src/hooks/**': { statements: 70, functions: 70, lines: 70 },
+      },
     },
   },
   resolve: {

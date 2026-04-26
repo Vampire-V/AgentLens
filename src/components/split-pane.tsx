@@ -1,8 +1,9 @@
 'use client'; // stateful shell — useQueryState + all hooks require client
 
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { useQueryState } from 'nuqs';
+import { compressedYamlParser } from '@/lib/compressed-yaml-parser';
 import { useYamlParser } from '@/hooks/use-yaml-parser';
 import { useElkLayout } from '@/hooks/use-elk-layout';
 import { workflowToFlowGraph } from '@/lib/yaml-to-flow';
@@ -94,7 +95,12 @@ routes:
 
 export function SplitPane() {
   const { resolvedTheme } = useTheme();
-  const [yaml, setYaml] = useQueryState('yaml', { defaultValue: DEFAULT_YAML });
+  const [mounted, setMounted] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- canonical next-themes SSR hydration pattern
+  useEffect(() => setMounted(true), []);
+  const colorMode = mounted ? ((resolvedTheme as 'light' | 'dark') ?? 'light') : 'light';
+
+  const [yaml, setYaml] = useQueryState('yaml', compressedYamlParser.withDefault(DEFAULT_YAML));
   const { workflow, error } = useYamlParser(yaml);
 
   const { nodes: rawNodes, edges } = useMemo(
@@ -135,7 +141,7 @@ export function SplitPane() {
           <YamlEditor value={yaml} onChange={handleYamlChange} error={error} />
         </div>
         <div ref={canvasRef} className="h-full w-1/2">
-          <FlowCanvas nodes={nodes} edges={edges} isLayouting={isLayouting} onNodeClick={handleNodeClick} colorMode={resolvedTheme as 'light' | 'dark'} />
+          <FlowCanvas nodes={nodes} edges={edges} isLayouting={isLayouting} onNodeClick={handleNodeClick} colorMode={colorMode} />
         </div>
       </div>
       <AgentInspector agent={selectedAgent} onClose={handleInspectorClose} />
