@@ -1,6 +1,5 @@
 'use client'; // interactive select — requires client runtime
 
-import { useState } from 'react'
 import { TEMPLATES, TEMPLATE_CATEGORIES } from '@/lib/templates'
 
 interface TemplatePickerProps {
@@ -8,18 +7,14 @@ interface TemplatePickerProps {
 }
 
 export function TemplatePicker({ onSelect }: TemplatePickerProps) {
-  const [selectedId, setSelectedId] = useState('')
-
   return (
     <select
       className="rounded border border-border bg-background px-2 py-1 text-xs text-foreground dark:bg-zinc-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      value={selectedId}
+      defaultValue=""
       onChange={(e) => {
         const tpl = TEMPLATES.find((t) => t.id === e.target.value)
-        if (tpl) {
-          setSelectedId(tpl.id)
-          onSelect(tpl.yaml)
-        }
+        if (tpl) onSelect(tpl.yaml)
+        e.target.value = ''
       }}
     >
       <option value="" disabled>
