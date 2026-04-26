@@ -1,6 +1,7 @@
 'use client'; // stateful shell — useQueryState + all hooks require client
 
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { useTheme } from 'next-themes';
 import { useQueryState } from 'nuqs';
 import { useYamlParser } from '@/hooks/use-yaml-parser';
 import { useElkLayout } from '@/hooks/use-elk-layout';
@@ -10,6 +11,7 @@ import { YamlEditor } from './yaml-editor';
 import { AgentInspector } from './agent-inspector';
 import { TemplatePicker } from './template-picker';
 import { ExportPngButton } from './export-png-button';
+import { DarkModeToggle } from './dark-mode-toggle';
 
 const DEFAULT_YAML = `version: "1.0.0"
 name: "AI Research Pipeline"
@@ -86,6 +88,7 @@ routes:
 `;
 
 export function SplitPane() {
+  const { resolvedTheme } = useTheme();
   const [yaml, setYaml] = useQueryState('yaml', { defaultValue: DEFAULT_YAML });
   const { workflow, error } = useYamlParser(yaml);
 
@@ -115,18 +118,19 @@ export function SplitPane() {
 
   return (
     <div className="flex h-full w-full flex-col overflow-hidden">
-      <div className="flex shrink-0 items-center gap-2 border-b border-zinc-100 bg-zinc-50 px-3 py-1.5">
+      <div className="flex shrink-0 items-center gap-2 border-b border-border bg-background px-3 py-1.5">
         <TemplatePicker onSelect={handleYamlChange} />
+        <DarkModeToggle />
         <div className="ml-auto">
           <ExportPngButton containerRef={canvasRef} />
         </div>
       </div>
       <div className="flex flex-1 overflow-hidden">
-        <div className="h-full w-1/2 border-r border-zinc-200">
+        <div className="h-full w-1/2 border-r border-border">
           <YamlEditor value={yaml} onChange={handleYamlChange} error={error} />
         </div>
         <div ref={canvasRef} className="h-full w-1/2">
-          <FlowCanvas nodes={nodes} edges={edges} isLayouting={isLayouting} onNodeClick={handleNodeClick} />
+          <FlowCanvas nodes={nodes} edges={edges} isLayouting={isLayouting} onNodeClick={handleNodeClick} colorMode={resolvedTheme as 'light' | 'dark'} />
         </div>
       </div>
       <AgentInspector agent={selectedAgent} onClose={handleInspectorClose} />
