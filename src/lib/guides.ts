@@ -21,7 +21,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'visualize-langgraph',
-    title: 'How to Visualize Your LangGraph Diagram',
+    title: 'How to Visualize LangGraph Agent Graphs',
     framework: 'LangGraph',
     description:
       'Discover how AgentLens helps you visualize LangGraph state machines and agent architectures. Convert your LangGraph definition to YAML and explore your graph topology interactively.',
