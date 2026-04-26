@@ -1,5 +1,30 @@
-import { Suspense } from "react";
-import { SplitPane } from "@/components/split-pane";
+import type { Metadata } from 'next'
+import { Suspense } from 'react'
+import { SplitPane } from '@/components/split-pane'
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ yaml?: string }>
+}): Promise<Metadata> {
+  const { yaml } = await searchParams
+  const ogUrl = yaml
+    ? `/api/og?yaml=${encodeURIComponent(yaml)}`
+    : `/api/og`
+  return {
+    openGraph: {
+      title: 'AgentLens',
+      description: 'Visual YAML editor for AI agent orchestration workflows',
+      images: [{ url: ogUrl, width: 1200, height: 630, alt: 'AgentLens workflow preview' }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'AgentLens',
+      description: 'Visual YAML editor for AI agent orchestration workflows',
+      images: [ogUrl],
+    },
+  }
+}
 
 export default function Home() {
   return (
@@ -14,5 +39,5 @@ export default function Home() {
         </Suspense>
       </div>
     </main>
-  );
+  )
 }
