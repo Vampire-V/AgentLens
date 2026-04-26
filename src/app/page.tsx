@@ -70,8 +70,10 @@ export default function Home() {
     model: gpt-4o
     tools: [markdown_writer]
 routes:
-  - source: researcher
-    target: writer`}</code>
+  - id: r1
+    source: researcher
+    target: writer
+    label: "Hand off findings"`}</code>
                 </pre>
               </div>
 
@@ -289,11 +291,19 @@ routes:
               <code className="rounded bg-muted px-1 py-0.5 text-sm text-foreground">
                 target
               </code>{' '}
-              agent ID, forming the directed edges of the graph. Optional{' '}
+              agent ID, forming the directed edges of the graph. Each route also requires an{' '}
+              <code className="rounded bg-muted px-1 py-0.5 text-sm text-foreground">
+                id
+              </code>{' '}
+              and a{' '}
+              <code className="rounded bg-muted px-1 py-0.5 text-sm text-foreground">
+                label
+              </code>{' '}
+              to uniquely identify and describe the handoff. Optional{' '}
               <code className="rounded bg-muted px-1 py-0.5 text-sm text-foreground">
                 condition
               </code>{' '}
-              labels on routes let you annotate branching logic.
+              fields let you annotate branching logic.
             </p>
 
             <p>
