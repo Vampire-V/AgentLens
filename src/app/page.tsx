@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { SplitPane } from "@/components/split-pane";
 
 export default function Home() {
@@ -8,7 +9,9 @@ export default function Home() {
         <span className="ml-2 text-xs text-muted-foreground">YAML → Graph</span>
       </header>
       <div className="flex-1 overflow-hidden">
-        <SplitPane />
+        <Suspense>
+          <SplitPane />
+        </Suspense>
       </div>
     </main>
   );
