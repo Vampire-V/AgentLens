@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import LZString from 'lz-string'
 import { SplitPane } from '@/components/split-pane'
 import { DEFAULT_YAML } from '@/lib/default-yaml'
+import { extractWorkflowMeta } from '@/app/api/og/extract-workflow-meta'
 
 export async function generateMetadata({
   searchParams,
@@ -11,7 +12,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { yaml } = await searchParams
   const compressed = yaml ?? LZString.compressToEncodedURIComponent(DEFAULT_YAML)
-  const ogUrl = `/api/og?yaml=${encodeURIComponent(compressed)}`
+  const meta =
+    extractWorkflowMeta(compressed) ??
+    extractWorkflowMeta(LZString.compressToEncodedURIComponent(DEFAULT_YAML))!
+  const ogUrl = `/api/og?name=${encodeURIComponent(meta.name)}&agents=${meta.agentCount}&routes=${meta.routeCount}`
   return {
     openGraph: {
       title: 'AgentLens',
