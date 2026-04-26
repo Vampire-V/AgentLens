@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { useQueryState } from 'nuqs';
+import { compressedYamlParser } from '@/lib/compressed-yaml-parser';
 import { useYamlParser } from '@/hooks/use-yaml-parser';
 import { useElkLayout } from '@/hooks/use-elk-layout';
 import { workflowToFlowGraph } from '@/lib/yaml-to-flow';
@@ -94,7 +95,7 @@ routes:
 
 export function SplitPane() {
   const { resolvedTheme } = useTheme();
-  const [yaml, setYaml] = useQueryState('yaml', { defaultValue: DEFAULT_YAML });
+  const [yaml, setYaml] = useQueryState('yaml', compressedYamlParser.withDefault(DEFAULT_YAML));
   const { workflow, error } = useYamlParser(yaml);
 
   const { nodes: rawNodes, edges } = useMemo(
