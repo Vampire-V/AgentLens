@@ -19,6 +19,10 @@ export default defineConfig({
         'src/app/**',
       ],
       reporter: ['text', 'html'],
+      thresholds: {
+        'src/lib/**': { statements: 70, functions: 70, lines: 70 },
+        'src/hooks/**': { statements: 70, functions: 70, lines: 70 },
+      },
     },
   },
   resolve: {
