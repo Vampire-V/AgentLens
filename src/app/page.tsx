@@ -15,9 +15,14 @@ export async function generateMetadata({
     openGraph: {
       title: 'AgentLens',
       description: 'Visual YAML editor for AI agent orchestration workflows',
-      images: [{ url: ogUrl, width: 1200, height: 630 }],
+      images: [{ url: ogUrl, width: 1200, height: 630, alt: 'AgentLens workflow preview' }],
     },
-    twitter: { card: 'summary_large_image', images: [ogUrl] },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'AgentLens',
+      description: 'Visual YAML editor for AI agent orchestration workflows',
+      images: [ogUrl],
+    },
   }
 }
 

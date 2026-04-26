@@ -13,6 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://agent-lens-murex.vercel.app'
+  ),
   title: "AgentLens",
   description: "Visual YAML editor for AI agent orchestration workflows",
 };
