@@ -1,12 +1,17 @@
 import { ImageResponse } from 'next/og'
-import { extractWorkflowMeta } from './extract-workflow-meta'
 
 export const runtime = 'edge'
 
 export function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  const compressed = searchParams.get('yaml')
-  const meta = extractWorkflowMeta(compressed)
+  const hasMeta = searchParams.has('name')
+  const meta = hasMeta
+    ? {
+        name: searchParams.get('name') ?? 'AgentLens',
+        agentCount: parseInt(searchParams.get('agents') ?? '0', 10),
+        routeCount: parseInt(searchParams.get('routes') ?? '0', 10),
+      }
+    : null
 
   return new ImageResponse(
     meta ? (
