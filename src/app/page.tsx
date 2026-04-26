@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
+import LZString from 'lz-string'
 import { SplitPane } from '@/components/split-pane'
+import { DEFAULT_YAML } from '@/lib/default-yaml'
 
 export async function generateMetadata({
   searchParams,
@@ -8,9 +10,8 @@ export async function generateMetadata({
   searchParams: Promise<{ yaml?: string }>
 }): Promise<Metadata> {
   const { yaml } = await searchParams
-  const ogUrl = yaml
-    ? `/api/og?yaml=${encodeURIComponent(yaml)}`
-    : `/api/og`
+  const compressed = yaml ?? LZString.compressToEncodedURIComponent(DEFAULT_YAML)
+  const ogUrl = `/api/og?yaml=${encodeURIComponent(compressed)}`
   return {
     openGraph: {
       title: 'AgentLens',
