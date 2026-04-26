@@ -5,6 +5,39 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [0.7.0](https://github.com/Vampire-V/AgentLens/compare/agentlens-v0.6.1...agentlens-v0.7.0) (2026-04-26)
+
+
+### Features
+
+* **canvas:** add AnimatedEdge with glowing dots and role-based colors ([3f35747](https://github.com/Vampire-V/AgentLens/commit/3f35747e73494b4200cb8881cdf15811e6a00683))
+* **canvas:** add onNodeClick callback prop to FlowCanvas ([516db42](https://github.com/Vampire-V/AgentLens/commit/516db4220dd6a09e42dda9a7017036d648789af0))
+* **canvas:** animated data flow with glowing dots ([6b1de0e](https://github.com/Vampire-V/AgentLens/commit/6b1de0ef9ae2d78af3434c50c3521a82ad8f3c62))
+* **canvas:** wire AnimatedEdge as custom edgeType in FlowCanvas ([f0cdff7](https://github.com/Vampire-V/AgentLens/commit/f0cdff74ce4b5cfe993ea2b0b230712b9c796898))
+* **inspector:** add AgentInspector slide-out panel with Shadcn Sheet ([86b925a](https://github.com/Vampire-V/AgentLens/commit/86b925abdb0332a53949ca084a5518213d64d351))
+* **layout:** add elkLayout pure function and useElkLayout hook ([7fc6b52](https://github.com/Vampire-V/AgentLens/commit/7fc6b524cf911b0d3439d25e1ba32af9955de246))
+* **node:** add role-based border colors and selected ring highlight ([06f8416](https://github.com/Vampire-V/AgentLens/commit/06f84164fef21e9061078ddab967b5246553f368))
+* **parser:** add YAML schema, flow converter, and parser hook ([4eeeb08](https://github.com/Vampire-V/AgentLens/commit/4eeeb081ce5f7233403f2b97500a090de72bcda1))
+* **parser:** inject sourceRole and type animated into flow edges ([d1beafb](https://github.com/Vampire-V/AgentLens/commit/d1beafb54a7bc1db56cb94d8cb8c702597e60468))
+* scaffold Next.js 16 + XYFlow + Vitest baseline ([3586985](https://github.com/Vampire-V/AgentLens/commit/35869859811ee13944130f8eeb982b6273d45768))
+* **schema:** add role, prompt fields and make model a free string ([220f95d](https://github.com/Vampire-V/AgentLens/commit/220f95dfc7ff2d497d3e13ef5ad1739f5a1e30c3))
+* **transformer:** add role and prompt to AgentNodeData ([432b129](https://github.com/Vampire-V/AgentLens/commit/432b12959def1eef2abb13902bb2b147b464220f))
+* **ui:** add split-pane canvas + editor MVP ([3c5f6df](https://github.com/Vampire-V/AgentLens/commit/3c5f6df7d907d87095741d3b46a0c0e9cf0e6b1d))
+* **ui:** fitView refit on topology change + useCallback onChange ([862bc25](https://github.com/Vampire-V/AgentLens/commit/862bc251cee319d9f7e7644f4d11dde8b56213bc))
+* **ui:** wire AgentInspector into SplitPane via node click ([debea8b](https://github.com/Vampire-V/AgentLens/commit/debea8b070d5131046683a43db027e7f1223e3d9))
+* v0.4.0 — Agent Inspector + Role Styling ([7ccb98f](https://github.com/Vampire-V/AgentLens/commit/7ccb98feeaf64820dd93b5f9ae65ff40297d9084))
+* v0.5.0 — Templates + Export PNG ([#2](https://github.com/Vampire-V/AgentLens/issues/2)) ([6268f86](https://github.com/Vampire-V/AgentLens/commit/6268f860ed957f152fa8193ae4102e3b77610e99))
+* v0.6.0 — Dark Mode + Vercel Deploy ([#3](https://github.com/Vampire-V/AgentLens/issues/3)) ([1fa9955](https://github.com/Vampire-V/AgentLens/commit/1fa9955073b4a25f97e6e8f5252b0072c4635eb3))
+
+
+### Bug Fixes
+
+* **canvas:** move SVG defs outside g for cross-browser filter resolution ([72e9f3f](https://github.com/Vampire-V/AgentLens/commit/72e9f3fa81e109b578c4f1707c8725a348c9eaa4))
+* **node:** use substring matching for model colors, wrap onClose in useCallback ([161fe38](https://github.com/Vampire-V/AgentLens/commit/161fe380e3ab95b6d42135b4b662aea2cc91a8d4))
+* **parser:** debounce useYamlParser, add top-level edge label, fix audit command ([b6488dd](https://github.com/Vampire-V/AgentLens/commit/b6488dd093f6900800677e9d29f5f373cf8ab9fd))
+* **parser:** narrow sourceRole type to AgentRole ([b88c6a2](https://github.com/Vampire-V/AgentLens/commit/b88c6a2643bd0f959c701b06d23fb8c4f0a5c2c6))
+* **ui:** memo FlowCanvas, increase NODE_HEIGHT to 100 ([6c4a023](https://github.com/Vampire-V/AgentLens/commit/6c4a0232d6b69bc13bfd17e718796f680520fe43))
+
 ## [Unreleased]
 
 ---
