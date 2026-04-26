@@ -33,10 +33,11 @@ interface FlowCanvasProps {
   nodes: FlowNode[];
   edges: FlowEdge[];
   isLayouting: boolean;
+  colorMode?: 'light' | 'dark';
   onNodeClick?: (nodeId: string) => void;
 }
 
-function FlowCanvasComponent({ nodes: elkNodes, edges: elkEdges, isLayouting, onNodeClick }: FlowCanvasProps) {
+function FlowCanvasComponent({ nodes: elkNodes, edges: elkEdges, isLayouting, colorMode = 'light', onNodeClick }: FlowCanvasProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<FlowNode>(elkNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState<FlowEdge>(elkEdges);
 
@@ -58,7 +59,7 @@ function FlowCanvasComponent({ nodes: elkNodes, edges: elkEdges, isLayouting, on
   return (
     <div className="relative h-full w-full">
       {isLayouting && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/60">
           <span className="text-sm text-zinc-500">Laying out…</span>
         </div>
       )}
@@ -69,6 +70,7 @@ function FlowCanvasComponent({ nodes: elkNodes, edges: elkEdges, isLayouting, on
         onEdgesChange={onEdgesChange}
         onNodeClick={handleNodeClick}
         nodeTypes={nodeTypes}
+        colorMode={colorMode}
       >
         <Background />
         <Controls />

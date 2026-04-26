@@ -9,7 +9,7 @@ interface TemplatePickerProps {
 export function TemplatePicker({ onSelect }: TemplatePickerProps) {
   return (
     <select
-      className="rounded border border-zinc-200 bg-white px-2 py-1 text-xs text-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="rounded border border-border bg-background px-2 py-1 text-xs text-foreground dark:bg-zinc-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
       defaultValue=""
       onChange={(e) => {
         const tpl = TEMPLATES.find((t) => t.id === e.target.value)
