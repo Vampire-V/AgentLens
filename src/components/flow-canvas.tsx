@@ -12,10 +12,12 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { AgentNode } from './agent-node';
+import { AnimatedEdge } from './animated-edge';
 import type { FlowNode, FlowEdge } from '@/lib/yaml-to-flow';
 
 // must be at module level — object identity must be stable across renders
 const nodeTypes = { agent: AgentNode };
+const edgeTypes = { animated: AnimatedEdge };
 
 // rendered inside <ReactFlow> context so useReactFlow() is available
 function FitViewOnChange({ elkNodes }: { elkNodes: FlowNode[] }) {
@@ -70,6 +72,7 @@ function FlowCanvasComponent({ nodes: elkNodes, edges: elkEdges, isLayouting, co
         onEdgesChange={onEdgesChange}
         onNodeClick={handleNodeClick}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         colorMode={colorMode}
       >
         <Background />

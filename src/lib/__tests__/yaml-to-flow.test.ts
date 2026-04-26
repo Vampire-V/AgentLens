@@ -90,4 +90,21 @@ describe('workflowToFlowGraph', () => {
       expect(node?.data.role).toBe('custom');
     });
   });
+
+  it('manager_source_route__workflowToFlowGraph__edge_has_sourceRole_manager', () => {
+    const workflow = WorkflowSchema.parse({
+      version: '1.0.0',
+      name: 'Test',
+      agents: [
+        { id: 'mgr', name: 'Manager', role: 'manager', tools: [] },
+        { id: 'wkr', name: 'Worker', role: 'worker', tools: [] },
+      ],
+      routes: [
+        { id: 'r1', source: 'mgr', target: 'wkr', label: 'task' },
+      ],
+    });
+    const { edges } = workflowToFlowGraph(workflow);
+    expect(edges[0].data?.sourceRole).toBe('manager');
+    expect(edges[0].type).toBe('animated');
+  });
 });
