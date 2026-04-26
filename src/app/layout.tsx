@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     'multi-agent workflow tool',
     'AI agent orchestration visualizer',
   ],
+  verification: {
+    google: '-nPl-t4aXdZbJ2a5TyDeqsQTmAxSHjkfaQkHJqOZHt4',
+  },
 };
 
 export default function RootLayout({
