@@ -1,6 +1,7 @@
 'use client'; // stateful shell — useQueryState + all hooks require client
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { track } from '@/lib/analytics';
 import { useTheme } from 'next-themes';
 import { useQueryState } from 'nuqs';
 import { compressedYamlParser } from '@/lib/compressed-yaml-parser';
@@ -33,8 +34,18 @@ export function SplitPane() {
   const { nodes, isLayouting } = useElkLayout(rawNodes, edges);
 
   const canvasRef = useRef<HTMLDivElement>(null);
+  const hasTrackedFirstKeystroke = useRef(false);
 
-  const handleYamlChange = useCallback((v: string) => void setYaml(v), [setYaml]);
+  const handleYamlChange = useCallback(
+    (v: string) => {
+      if (!hasTrackedFirstKeystroke.current) {
+        hasTrackedFirstKeystroke.current = true;
+        track('editor_first_keystroke', {});
+      }
+      void setYaml(v);
+    },
+    [setYaml]
+  );
 
   const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
 
