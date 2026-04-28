@@ -1,7 +1,8 @@
 'use client'; // useEffect + useState — must run client-side
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { elkLayout } from '@/lib/elk-layout';
+import { track } from '@/lib/analytics';
 import type { FlowNode, FlowEdge } from '@/lib/yaml-to-flow';
 
 export interface ElkLayoutResult {
@@ -12,6 +13,9 @@ export interface ElkLayoutResult {
 export function useElkLayout(nodes: FlowNode[], edges: FlowEdge[]): ElkLayoutResult {
   const [laidOutNodes, setLaidOutNodes] = useState<FlowNode[]>(nodes);
   const [isLayouting, setIsLayouting] = useState(false);
+  // fire workflow_rendered only once per browser session (North Star event)
+  const hasRenderedRef = useRef(false);
+  const startTimeRef = useRef<number>(0);
 
   // re-layout only when topology changes, not on every re-render with new array refs
   const nodesKey = useMemo(() => nodes.map((n) => n.id).join(','), [nodes]);
@@ -30,6 +34,7 @@ export function useElkLayout(nodes: FlowNode[], edges: FlowEdge[]): ElkLayoutRes
         return;
       }
 
+      startTimeRef.current = Date.now();
       setIsLayouting(true);
 
       try {
@@ -37,6 +42,14 @@ export function useElkLayout(nodes: FlowNode[], edges: FlowEdge[]): ElkLayoutRes
         if (!cancelled) {
           setLaidOutNodes(positioned);
           setIsLayouting(false);
+          if (!hasRenderedRef.current && positioned.length >= 2) {
+            hasRenderedRef.current = true;
+            track('workflow_rendered', {
+              agent_count: positioned.length,
+              route_count: edges.length,
+              render_time_ms: Date.now() - startTimeRef.current,
+            });
+          }
         }
       } catch {
         if (!cancelled) {

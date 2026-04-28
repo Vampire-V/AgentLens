@@ -1,6 +1,9 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useYamlParser } from '../use-yaml-parser';
+import { track } from '@/lib/analytics';
+
+vi.mock('@/lib/analytics', () => ({ track: vi.fn() }));
 
 const validYaml = `
 name: Test
@@ -98,5 +101,57 @@ describe('useYamlParser', () => {
     });
     expect(result.current.workflow).toBeNull();
     expect(result.current.error).not.toBeNull();
+  });
+
+  it('syntax_error__parse__fires_yaml_error_shown_with_syntax_type', async () => {
+    vi.mocked(track).mockClear();
+    renderHook(() => useYamlParser(invalidYamlSyntax));
+    await act(async () => { vi.advanceTimersByTime(150); });
+
+    expect(vi.mocked(track)).toHaveBeenCalledWith('yaml_error_shown', { error_type: 'syntax' });
+  });
+
+  it('schema_error__parse__fires_yaml_error_shown_with_schema_type', async () => {
+    vi.mocked(track).mockClear();
+    renderHook(() => useYamlParser(invalidSchemaYaml));
+    await act(async () => { vi.advanceTimersByTime(150); });
+
+    expect(vi.mocked(track)).toHaveBeenCalledWith('yaml_error_shown', { error_type: 'schema' });
+  });
+
+  it('same_error_repeated__parse__fires_yaml_error_shown_only_once', async () => {
+    vi.mocked(track).mockClear();
+    const { rerender } = renderHook(
+      ({ yaml }: { yaml: string }) => useYamlParser(yaml),
+      { initialProps: { yaml: invalidSchemaYaml } }
+    );
+    await act(async () => { vi.advanceTimersByTime(150); });
+    expect(vi.mocked(track)).toHaveBeenCalledTimes(1);
+
+    // rerender with the same YAML → same error message → dedup
+    rerender({ yaml: invalidSchemaYaml });
+    await act(async () => { vi.advanceTimersByTime(150); });
+
+    expect(vi.mocked(track)).toHaveBeenCalledTimes(1);
+  });
+
+  it('error_then_success_then_same_error__parse__fires_twice_total', async () => {
+    vi.mocked(track).mockClear();
+    const { rerender } = renderHook(
+      ({ yaml }: { yaml: string }) => useYamlParser(yaml),
+      { initialProps: { yaml: invalidSchemaYaml } }
+    );
+    await act(async () => { vi.advanceTimersByTime(150); });
+    expect(vi.mocked(track)).toHaveBeenCalledTimes(1);
+
+    // successful parse resets lastErrorMsgRef
+    rerender({ yaml: validYaml });
+    await act(async () => { vi.advanceTimersByTime(150); });
+
+    // same error again — ref was reset, so fires again
+    rerender({ yaml: invalidSchemaYaml });
+    await act(async () => { vi.advanceTimersByTime(150); });
+
+    expect(vi.mocked(track)).toHaveBeenCalledTimes(2);
   });
 });
