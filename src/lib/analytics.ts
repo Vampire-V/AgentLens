@@ -33,18 +33,18 @@ type TrackFn = <E extends keyof AnalyticsEvents>(
   properties: AnalyticsEvents[E]
 ) => void;
 
-let _adapter: TrackFn = () => {};
+let _adapter: TrackFn | null = null;
 
 /** Register a platform-specific tracking implementation. */
 export function setAnalyticsAdapter(fn: TrackFn): void {
   _adapter = fn;
 }
 
-/** Fire a typed analytics event. Silent no-op outside production. */
+/** Fire a typed analytics event. Silent no-op outside production or if no adapter registered. */
 export function track<E extends keyof AnalyticsEvents>(
   event: E,
   properties: AnalyticsEvents[E]
 ): void {
   if (process.env.NODE_ENV !== 'production') return;
-  _adapter(event, properties);
+  _adapter?.(event, properties);
 }

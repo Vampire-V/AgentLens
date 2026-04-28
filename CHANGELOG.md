@@ -5,6 +5,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [Unreleased]
+
+### Added
+- Vendor-agnostic analytics abstraction (`src/lib/analytics.ts`) with typed events and `setAnalyticsAdapter()` plug-in point — North Star metric (`workflow_rendered`), `yaml_error_shown`, and `editor_first_keystroke` instrumented across hooks and components.
+
+---
+
 ## [0.8.0](https://github.com/Vampire-V/AgentLens/compare/agentlens-v0.7.0...agentlens-v0.8.0) (2026-04-26)
 
 
