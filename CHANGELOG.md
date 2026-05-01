@@ -5,6 +5,25 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [0.9.0](https://github.com/Vampire-V/AgentLens/compare/agentlens-v0.8.0...agentlens-v0.9.0) (2026-05-01)
+
+
+### Features
+
+* **analytics:** add vendor-agnostic analytics instrumentation ([#17](https://github.com/Vampire-V/AgentLens/issues/17)) ([2305229](https://github.com/Vampire-V/AgentLens/commit/2305229c787f85193b2cddc2cd8c802a157d3b37))
+* **og:** dynamic OG image — thumbnail แสดงชื่อ workflow + agent/route counts ([#11](https://github.com/Vampire-V/AgentLens/issues/11)) ([83f3930](https://github.com/Vampire-V/AgentLens/commit/83f3930e17e6f6827edbf5ebc4b8130f4febce89))
+* **seo:** add Google Search Console verification meta tag ([#16](https://github.com/Vampire-V/AgentLens/issues/16)) ([bdc1ecc](https://github.com/Vampire-V/AgentLens/commit/bdc1ecc164424c31464d28c90ad3a83cd95c9de6))
+* **seo:** add OG/Twitter metadata, JSON-LD structured data, and canonical URLs ([4ddd6d5](https://github.com/Vampire-V/AgentLens/commit/4ddd6d597eae8483def62ffa4f8c47b7806487e8))
+* **seo:** landing page, guide pages, and technical SEO ([#15](https://github.com/Vampire-V/AgentLens/issues/15)) ([6b6088e](https://github.com/Vampire-V/AgentLens/commit/6b6088ee56523af6f710d64e20934ced733e1274))
+* **seo:** OG/Twitter metadata, JSON-LD structured data, canonical URLs ([6fc92af](https://github.com/Vampire-V/AgentLens/commit/6fc92afd3ab8337c4c4949f14922a95cf5407642))
+
+
+### Bug Fixes
+
+* **og:** extract metadata server-side แทนการ decompress ใน edge route ([#14](https://github.com/Vampire-V/AgentLens/issues/14)) ([b3f6d36](https://github.com/Vampire-V/AgentLens/commit/b3f6d360cbec85f9bb7d03f1000bacaa0343b7f2))
+* **og:** plain URL now shows workflow thumbnail instead of blank ([#13](https://github.com/Vampire-V/AgentLens/issues/13)) ([433a808](https://github.com/Vampire-V/AgentLens/commit/433a80875e36de815389e1dfe2849c8eab7b85c1))
+* **seo:** cast OpenGraph/Twitter to Record to fix strict tsc errors in tests ([7cc7804](https://github.com/Vampire-V/AgentLens/commit/7cc7804f3de2aa5151b6e0ed6273d45fd51c2ff3))
+
 ## [Unreleased]
 
 ### Added
