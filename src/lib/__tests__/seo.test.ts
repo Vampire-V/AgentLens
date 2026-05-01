@@ -57,12 +57,14 @@ describe('buildPageMetadata', () => {
 
   it('default_opts__buildPageMetadata__sets_website_og_type', () => {
     const result = buildPageMetadata(baseOpts);
-    expect(result.openGraph?.type).toBe('website');
+    const og = result.openGraph as Record<string, unknown>;
+    expect(og['type']).toBe('website');
   });
 
   it('article_ogType__buildPageMetadata__sets_article_og_type', () => {
     const result = buildPageMetadata({ ...baseOpts, ogType: 'article' });
-    expect(result.openGraph?.type).toBe('article');
+    const og = result.openGraph as Record<string, unknown>;
+    expect(og['type']).toBe('article');
   });
 
   it('default_opts__buildPageMetadata__includes_siteName_and_locale', () => {
@@ -73,7 +75,8 @@ describe('buildPageMetadata', () => {
 
   it('default_opts__buildPageMetadata__sets_twitter_summary_large_image', () => {
     const result = buildPageMetadata(baseOpts);
-    expect(result.twitter?.card).toBe('summary_large_image');
+    const tw = result.twitter as Record<string, unknown>;
+    expect(tw['card']).toBe('summary_large_image');
   });
 
   it('default_opts__buildPageMetadata__passes_title_and_description_to_og_and_twitter', () => {
