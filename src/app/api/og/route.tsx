@@ -1,15 +1,23 @@
 import { ImageResponse } from 'next/og'
+import { SITE_URL } from '@/lib/seo'
 
 export const runtime = 'edge'
 
 export function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const hasMeta = searchParams.has('name')
+  const isGuide = !hasMeta && searchParams.get('type') === 'guide'
   const meta = hasMeta
     ? {
         name: searchParams.get('name') ?? 'AgentLens',
         agentCount: parseInt(searchParams.get('agents') ?? '0', 10),
         routeCount: parseInt(searchParams.get('routes') ?? '0', 10),
+      }
+    : null
+  const guideMeta = isGuide
+    ? {
+        title: (searchParams.get('title') ?? 'Integration Guide').slice(0, 120),
+        framework: (searchParams.get('framework') ?? '').slice(0, 40),
       }
     : null
 
@@ -74,7 +82,71 @@ export function GET(request: Request) {
           </span>
         </div>
         <div style={{ marginTop: 'auto', fontSize: 14, color: '#444444' }}>
-          agent-lens-murex.vercel.app
+          {new URL(SITE_URL).hostname}
+        </div>
+      </div>
+    ) : guideMeta ? (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '60px 80px',
+          background: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%)',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            marginBottom: 24,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 14,
+              letterSpacing: 3,
+              color: '#7c83fd',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+            }}
+          >
+            AgentLens
+          </span>
+          {guideMeta.framework ? (
+            <span
+              style={{
+                fontSize: 13,
+                color: '#7c83fd',
+                background: 'rgba(124,131,253,0.15)',
+                padding: '4px 12px',
+                borderRadius: 20,
+                fontWeight: 600,
+              }}
+            >
+              {guideMeta.framework}
+            </span>
+          ) : null}
+        </div>
+        <div
+          style={{
+            fontSize: 46,
+            fontWeight: 700,
+            color: '#ffffff',
+            marginBottom: 20,
+            lineHeight: 1.15,
+          }}
+        >
+          {guideMeta.title}
+        </div>
+        <div style={{ fontSize: 18, color: '#aaaaaa' }}>
+          AgentLens Integration Guide
+        </div>
+        <div style={{ marginTop: 'auto', fontSize: 14, color: '#444444' }}>
+          {new URL(SITE_URL).hostname}
         </div>
       </div>
     ) : (
@@ -115,7 +187,7 @@ export function GET(request: Request) {
           Visual YAML editor for AI agent orchestration workflows
         </div>
         <div style={{ marginTop: 'auto', fontSize: 14, color: '#444444' }}>
-          agent-lens-murex.vercel.app
+          {new URL(SITE_URL).hostname}
         </div>
       </div>
     ),

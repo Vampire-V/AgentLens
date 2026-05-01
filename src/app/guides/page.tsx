@@ -1,11 +1,21 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { GUIDES } from '@/lib/guides';
+import { buildPageMetadata, buildOgImageUrl } from '@/lib/seo';
+
+const GUIDES_DESCRIPTION =
+  'Step-by-step guides to visualize your AI agent framework workflows in AgentLens.';
 
 export const metadata: Metadata = {
   title: 'Integration Guides',
-  description:
-    'Step-by-step guides to visualize your AI agent framework workflows in AgentLens.',
+  description: GUIDES_DESCRIPTION,
+  ...buildPageMetadata({
+    title: 'Integration Guides | AgentLens',
+    description: GUIDES_DESCRIPTION,
+    path: '/guides',
+    ogImageUrl: buildOgImageUrl({ type: 'default' }),
+    ogImageAlt: 'AgentLens Integration Guides',
+  }),
 };
 
 export default function GuidesIndexPage() {
