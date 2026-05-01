@@ -1,10 +1,50 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getGuide } from '@/lib/guides';
+import { buildPageMetadata, buildOgImageUrl, SITE_URL } from '@/lib/seo';
+
+const guide = getGuide('visualize-crewai');
 
 export const metadata: Metadata = {
-  title: 'How to Visualize Your CrewAI Workflow',
-  description:
-    'Step-by-step guide to visualize CrewAI agent workflows using AgentLens. Paste your YAML and see an interactive agent graph instantly.',
+  title: guide.title,
+  description: guide.description,
+  ...buildPageMetadata({
+    title: guide.title,
+    description: guide.description,
+    path: `/guides/${guide.slug}`,
+    ogImageUrl: buildOgImageUrl({ type: 'guide', title: guide.title, framework: guide.framework }),
+    ogImageAlt: `${guide.title} — AgentLens`,
+    ogType: 'article',
+    article: { publishedTime: guide.datePublished, modifiedTime: guide.lastModified },
+  }),
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: guide.title,
+  description: guide.description,
+  url: `${SITE_URL}/guides/${guide.slug}`,
+  image: buildOgImageUrl({ type: 'guide', title: guide.title, framework: guide.framework }),
+  datePublished: guide.datePublished,
+  dateModified: guide.lastModified,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/guides/${guide.slug}` },
+  author: { '@type': 'Organization', name: 'AgentLens' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'AgentLens',
+    logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.ico`, width: 48, height: 48 },
+  },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+    { '@type': 'ListItem', position: 2, name: 'Guides', item: `${SITE_URL}/guides` },
+    { '@type': 'ListItem', position: 3, name: guide.title, item: `${SITE_URL}/guides/${guide.slug}` },
+  ],
 };
 
 const CREWAI_YAML = `version: "1.0.0"
@@ -51,6 +91,9 @@ routes:
 export default function VisualizeCrewAIPage() {
   return (
     <>
+      {/* static server-side objects — safe for dangerouslySetInnerHTML */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
           <Link href="/" className="text-lg font-bold tracking-tight">

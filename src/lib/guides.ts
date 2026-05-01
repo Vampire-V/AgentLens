@@ -6,6 +6,7 @@ export interface Guide {
   framework: string;
   description: string;
   targetKeyword: string;
+  datePublished: string;
   lastModified: string;
 }
 
@@ -17,6 +18,7 @@ export const GUIDES: Guide[] = [
     description:
       'Learn how to use AgentLens to visualize and debug your CrewAI agent workflows. Export your agent configuration to YAML and see the orchestration graph rendered in real time.',
     targetKeyword: 'CrewAI visualizer',
+    datePublished: '2026-04-27',
     lastModified: '2026-04-27',
   },
   {
@@ -26,6 +28,7 @@ export const GUIDES: Guide[] = [
     description:
       'Discover how AgentLens helps you visualize LangGraph state machines and agent architectures. Convert your LangGraph definition to YAML and explore your graph topology interactively.',
     targetKeyword: 'LangGraph diagram tool',
+    datePublished: '2026-04-27',
     lastModified: '2026-04-27',
   },
 ];

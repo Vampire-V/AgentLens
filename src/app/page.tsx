@@ -1,14 +1,37 @@
 import type { Metadata } from 'next';
 import { GUIDES } from '@/lib/guides';
+import { buildPageMetadata, buildOgImageUrl, SITE_URL } from '@/lib/seo';
+
+const HOME_DESCRIPTION =
+  'Free online tool to visualize AI agent workflows. Supports CrewAI, LangGraph, and custom YAML agent orchestration schemas.';
 
 export const metadata: Metadata = {
-  description:
-    'Free online tool to visualize AI agent workflows. Supports CrewAI, LangGraph, and custom YAML agent orchestration schemas.',
+  description: HOME_DESCRIPTION,
+  ...buildPageMetadata({
+    title: 'AgentLens — AI Agent Orchestration Visualizer',
+    description: HOME_DESCRIPTION,
+    path: '/',
+    ogImageUrl: buildOgImageUrl({ type: 'default' }),
+    ogImageAlt: 'AgentLens — AI Agent Orchestration Visualizer',
+  }),
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'AgentLens',
+  url: SITE_URL,
+  description: HOME_DESCRIPTION,
 };
 
 export default function Home() {
   return (
     <>
+      {/* static server-side object — safe for dangerouslySetInnerHTML */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
       {/* Sticky navigation header */}
       <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">

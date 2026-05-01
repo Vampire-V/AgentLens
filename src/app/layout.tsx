@@ -35,6 +35,23 @@ export const metadata: Metadata = {
   verification: {
     google: '-nPl-t4aXdZbJ2a5TyDeqsQTmAxSHjkfaQkHJqOZHt4',
   },
+  openGraph: {
+    type: 'website',
+    siteName: 'AgentLens',
+    locale: 'en_US',
+    images: [
+      {
+        url: '/api/og',
+        width: 1200,
+        height: 630,
+        alt: 'AgentLens — AI Agent Orchestration Visualizer',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [{ url: '/api/og', alt: 'AgentLens — AI Agent Orchestration Visualizer' }],
+  },
 };
 
 export default function RootLayout({
